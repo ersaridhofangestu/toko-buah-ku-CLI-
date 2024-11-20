@@ -1,5 +1,6 @@
 from src.utils.selection import select
 from src.controllers.users import user_controller
+import time
 
 if __name__ == '__main__':
 
@@ -26,47 +27,66 @@ if __name__ == '__main__':
         if nested
     '''
     if not answers['home-menu'] == 'Exit':
-        
-        '''
-            login
-        '''
         if answers['home-menu'] == 'Login':
-            data_user = {
-                'email':select(
-                    type='input',
-                    name='email', 
-                    message="silakan masukan email",
-                    validate=lambda val: 'Harap masukkan email yang valid' if '@' not in val or '.' not in val else True),
-                'password':select(
-                    type='password',
-                    name='email', 
-                    message="silakan masukan password")
-            }
-            
-            req = user_config.user_login(data_user=data_user)
-            
-            
-            
-        '''
-            register
-        '''
-        new_data_user = {
-                'email':select(
-                    type='input',
-                    name='email', 
-                    message="silakan masukan email",
-                    validate=lambda val: 'Harap masukkan email yang valid' if '@' not in val or '.' not in val else True),
-                'password':select(
-                    type='password',
-                    name='email', 
-                    message="silakan masukan password")
-            }
-            
-        req = user_config.user_register(data_user=new_data_user)
-        
-        
+            '''
+                akses login
+            '''
+            while True :
+                email = select(
+                                    type='input',
+                                    name='email', 
+                                    message="silakan masukan email",
+                                    validate=lambda val: 'Harap masukkan email yang valid' if '@' not in val or '.' not in val else True)
+                password = select(
+                                    type='password',
+                                    name='password', 
+                                    message="silakan masukan password")
+                                    
+                new_data_user = {
+                                'email': email['email'],
+                                'password': str(password['password'])
+                }
+
+                            
+                            
+                status_user = user_config.user_login(data_user=new_data_user)
+                        
+                if status_user == True :
+                    print('testing')
+                    break
+                else :
+                    continue
+                
+                
         if answers['home-menu'] == 'Register':
-            print('register')
+                while True :
+                        '''
+                            register
+                        '''
+                        email = select(
+                                type='input',
+                                name='email', 
+                                message="silakan masukan email",
+                                validate=lambda val: 'Harap masukkan email yang valid' if '@' not in val or '.' not in val else True)
+                        password = select(
+                                type='password',
+                                name='password', 
+                                message="silakan masukan password")
+                                
+                        new_data_user = {
+                            'email': email['email'],
+                            'password': str(password['password'])
+                        }
+                        
+                        
+                        status_user = user_config.user_register(data_user=new_data_user)
+                        if status_user == True :
+                            print('testing')
+                            break
+                        else :
+                            continue
+                        
+        print('halo world')
         
     else:
         exit()

@@ -1,14 +1,14 @@
 from PyInquirer.prompt import prompt
-from typing import Optional,List,Dict
+from typing import Optional
 
 def select(
     type:'input', 
     name:str ,
-    choices: Optional[list[str]] = None,
+    choices: Optional[str] = None,
     default: Optional[bool] = None ,
     validate: Optional[str] = None,
     message:str = 'pilih opsi?'
-    ) -> Dict[str,str]:
+    ) -> str:
     questions = {
             'type': type,
             'name': name,
@@ -24,6 +24,6 @@ def select(
         questions['validate'] = validate
         
     
-    answers:Dict[str,str] = prompt([questions])
+    answers = prompt([questions])
     
     return answers

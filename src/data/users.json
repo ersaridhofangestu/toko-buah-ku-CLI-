@@ -1,7 +1,6 @@
 [
   {
-    "id": null,
-    "email": { "email": "ersa@gmail.com" },
-    "password": { "email": "9090" }
+    "email": "ersa@gmail.com",
+    "password": "9090"
   }
 ]
