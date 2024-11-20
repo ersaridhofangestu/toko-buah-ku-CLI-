@@ -8,7 +8,7 @@ def select(
     default: Optional[bool] = None ,
     validate: Optional[str] = None,
     message:str = 'pilih opsi?'
-    ) -> str:
+    ) -> str | bool:
     questions = {
             'type': type,
             'name': name,

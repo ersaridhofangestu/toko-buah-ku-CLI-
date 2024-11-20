@@ -1,5 +1,5 @@
 from pandas import  concat,DataFrame, read_json
-from typing import Dict
+from typing import Dict, Optional
 
 
 class PandasHandler:
@@ -10,12 +10,13 @@ class PandasHandler:
         self.PATH = path
 
     def load(
-        self
+        self,
+        path : Optional[str] = None
         ) -> DataFrame:
         """
         Memuat data dari file JSON.
         """
-        return read_json(self.PATH)
+        return read_json(path if path  else self.PATH)
 
     def save(
         self, 
@@ -40,7 +41,7 @@ class PandasHandler:
         return datas
 
     def read(
-        self
+        self,
         ) -> DataFrame:
         """
         Membaca seluruh data dari file JSON.

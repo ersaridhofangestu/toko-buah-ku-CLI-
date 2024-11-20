@@ -1,0 +1,63 @@
+[
+    {
+      "id": 1,
+      "name": "Apple",
+      "unit": "kg",
+      "price": 50000
+    },
+    {
+      "id": 2,
+      "name": "Banana",
+      "unit": "bunch",
+      "price": 20000
+    },
+    {
+      "id": 3,
+      "name": "Orange",
+      "unit": "kg",
+      "price": 40000
+    },
+    {
+      "id": 4,
+      "name": "Mango",
+      "unit": "kg",
+      "price": 60000
+    },
+    {
+      "id": 5,
+      "name": "Pineapple",
+      "unit": "piece",
+      "price": 30000
+    },
+    {
+      "id": 6,
+      "name": "Watermelon",
+      "unit": "piece",
+      "price": 25000
+    },
+    {
+      "id": 7,
+      "name": "Grapes",
+      "unit": "kg",
+      "price": 70000
+    },
+    {
+      "id": 8,
+      "name": "Strawberry",
+      "unit": "pack",
+      "price": 50000
+    },
+    {
+      "id": 9,
+      "name": "Papaya",
+      "unit": "piece",
+      "price": 20000
+    },
+    {
+      "id": 10,
+      "name": "Lemon",
+      "unit": "kg",
+      "price": 30000
+    }
+  ]
+  

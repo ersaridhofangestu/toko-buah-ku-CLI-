@@ -9,7 +9,7 @@ class user_controller(user_view,user_model):
     
     def user_login(self,data_user:Dict):
         try:
-            data_frame = self.read_uniq({'email' : str(data_user['email'])})
+            data_frame = self.read_uniq(where={'email' : str(data_user['email'])})
 
             if data_frame.empty:
                 print("Email tidak ditemukan.")
@@ -36,13 +36,13 @@ class user_controller(user_view,user_model):
         '''
         validasi data user
         '''
-        user = self.read_uniq({'email' : data_user['email']})
+        user = self.read_uniq(where={'email' : data_user['email']})
         
         if len(user) > 0 :
             print('Email sudah di gunakan.')
             return False
         
-        add_data = self.create_user(data_user)
+        add_data = self.create_user(data=data_user)
         response = self.view_register_user(add_data)
         if response['status'] == 201:
             return True
