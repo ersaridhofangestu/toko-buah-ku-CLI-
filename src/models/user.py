@@ -10,11 +10,8 @@ class user_model(PandasHandler):
         super().__init__(self.PATH)
         pass
         
-        '''
-        Membuat data user ke file JSON
-        '''
     def create_user(self,data:Dict):
-        return self.create(data)
+        return self.create([data])
     
     def read_user(self):
         return self.read()

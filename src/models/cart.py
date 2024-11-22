@@ -9,3 +9,6 @@ class cart_model(PandasHandler) :
     
     def create_cart(self, data):
         return self.create(data)
+    
+    def read_cart(self,where):
+        return self.read_uniq(where)

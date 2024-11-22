@@ -1,41 +1,32 @@
 from ..models.cart import cart_model
 from src.utils.selection import select
-from src.models.product import prodcut_model
 import os
 from pandas import DataFrame
-
+from ..utils.character_random import random
+from ..utils.calculate_total import calculate_total
 
 class cart_controller(cart_model):
     def __init__(self) -> None:
         super().__init__()
         pass
     def create_cart_validation(self,email):
+                path_to_products_file = os.path.join(os.getcwd(), 'src', 'data', 'products.json')
+                product_list = self.read(path=path_to_products_file)
+
                 customer_selection = { 
+                    "id": random(10),
                     "email": email,
                     "items": [], 
                     "total_price": 0 
                 }
 
                 item_prices = []
-
-                '''
-                Memuat data produk dari file JSON
-                '''
                 
-                path_to_products_file = os.path.join(os.getcwd(), 'src', 'data', 'products.json')
-                product_list = self.read(path=path_to_products_file)
-                
-                '''
-                Memformat data produk untuk ditampilkan
-                '''
                 product_list['formatted'] = product_list.apply(
                     lambda row: f'{row["id"]}) {row["name"]}/{row["unit"]} - Rp. {row["price"]:,.0f}', 
                     axis=1
                 ).reset_index(drop=True)
 
-                '''
-                Proses memilih produk yang ingin dibeli pelanggan
-                '''
                 
                 while True:
                     
@@ -66,27 +57,19 @@ class cart_controller(cart_model):
                     }
                     
                     item_prices.append(purchased_item['total'])
-                    
+                    if "items" not in customer_selection or not isinstance(customer_selection["items"], list):
+                        customer_selection["items"] = []
                     customer_selection['items'].append(purchased_item)
 
                     continue_answer = select(
                         type='confirm',
                         name='continue_shopping',
-                        message="Keluar dari menu pembelian?"
+                        message="Lajut belanja ?"
                     )
-                    if continue_answer['continue_shopping']:
+                    if not continue_answer['continue_shopping']:
                         break
-
-                '''
-                Fungsi rekursif untuk menghitung total harga pembelian
-                '''
-                def calculate_total(prices: list):
-                    if len(prices) == 0:
-                        return 0
-                    
-                    return prices[0] + calculate_total(prices[1:])
 
                 customer_selection['total_price'] = calculate_total(item_prices)
 
-                self.create_cart(customer_selection)
+                self.create_cart([customer_selection])
                 return customer_selection

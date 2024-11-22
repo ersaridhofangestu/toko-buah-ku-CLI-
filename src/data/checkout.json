@@ -1,0 +1,24 @@
+[
+    {
+        "email":"ersa01@gmail.com",
+        "items":[
+            {
+                "name":"Apple",
+                "price":50000,
+                "quantity":10,
+                "total":500000
+            },
+            {
+                "name":"Apple",
+                "price":50000,
+                "quantity":30,
+                "total":1500000
+            }
+        ],
+        "total_price":2000000,
+        "id":"Cq4Mnakfpz",
+        "address":"csacmsmlcaskcmamc.amcascas.csacsac",
+        "payment":"Cash",
+        "status":"success"
+    }
+]

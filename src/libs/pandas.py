@@ -14,9 +14,6 @@ class PandasHandler:
         self,
         ) -> DataFrame:
         
-        """
-        Memuat data dari file JSON.
-        """
         return read_json(self.PATH)
 
     def save(
@@ -37,7 +34,7 @@ class PandasHandler:
         """
         
         datas = self.load()
-        new_data = DataFrame([data])
+        new_data = DataFrame(data)
         
         datas = concat([datas, new_data], ignore_index=True) 
 

@@ -1,10 +1,18 @@
 [
-  {
-    "email": "ersa@gmail.com",
-    "password": "9090"
-  },
-  {
-    "email": "ferdi@gmail.com",
-    "password": "9090"
-  }
+    {
+        "email":"ersa@gmail.com",
+        "password":9090
+    },
+    {
+        "email":"ferdi@gmail.com",
+        "password":9090
+    },
+    {
+        "email":"ersa01@gmail.com",
+        "password":9090
+    },
+    {
+        "email":"ersa01@gmal.com",
+        "password":"9090"
+    }
 ]

@@ -32,9 +32,7 @@ class user_controller(user_view,user_model):
             return False
     
     def user_register(self,data_user:Dict):
-        '''
-        validasi data user
-        '''
+        
         user = self.read_uniq(where={'email' : data_user['email']})
         
         if len(user) > 0 :

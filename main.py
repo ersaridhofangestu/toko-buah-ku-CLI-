@@ -1,16 +1,20 @@
 from src.utils.selection import select
 from src.controllers.users import user_controller
 from src.controllers.cart import cart_controller
-from src.models.product import prodcut_model
+from tabulate import tabulate
+from src.controllers.checkout import checkout_controller
 
 import os
-from pandas import DataFrame
+from pandas import DataFrame,read_json
 
+'''
+f08b
+'''
 if __name__ == '__main__':
 
     user_config = user_controller()
     cart_config = cart_controller()
-    products = prodcut_model()
+    checkout = checkout_controller()
     
     email = None
     '''
@@ -118,7 +122,7 @@ if __name__ == '__main__':
         {icon*len_char}
             ''')  
                     path_file_menu = os.path.join(os.getcwd(), 'src', 'data', 'products.json')
-                    menu = user_config.load(path_file_menu)
+                    menu = read_json(path_file_menu)
                     print(menu)
 
                     while True :
@@ -136,13 +140,56 @@ if __name__ == '__main__':
         {icon*len_char}
             ''')  
                     
-                    cart_status = cart_config.create_cart_validation(email)
+                    cart_new = cart_config.create_cart_validation(email['email'])
 
                     
-                    print(cart_status)
-                    
                 case 'Checkout':
-                    print('checkout')
+                    cart = cart_config.read_cart(where=email).reset_index(drop=True)
+
+                    if cart.empty :
+                        print('Anda tidak bisa checkout karna cart belom di buat.')
+                        continue
+                    
+                    title = ' checkout '.upper()
+                    print(f'''
+        {icon*len_char}
+        {title.center(len_char,icon)}
+        {icon*len_char}
+            ''')  
+                    print(f'''
+ID pesanan {cart.loc[0, 'id']}
+Email pemesan {cart.loc[0, 'email']}
+Pesanan anda :
+{tabulate(DataFrame(cart.loc[0, 'items']), headers='keys',tablefmt='grid',showindex=False)}
+Total harga Rp. {cart.loc[0, 'total_price']:,.0f}
+                          ''')
+                    
+
+                    address = select(
+                        type='input',
+                        name='location',
+                        validate=lambda val: len(val) >= 25 or 'Harus detail minimal 25 karakter!' ,
+                        message='Masukan alamat anda dengan details ?',
+                    )
+                    
+                    payment = select(
+                        type='list',
+                        name='method',
+                        choices=[
+                            '\uF0d6  Cash',
+                            '\uF0d1  Cash-on-Delivery',
+                            '\uF09d  Credit-Cart'
+                            ], 
+                        message="Pilih buah yang ingin dibeli"
+                    )
+                    
+                    cart['address'] = address['location']
+                    cart['payment'] = payment['method'].split(' ')[-1]
+
+                    checkout.validation_checkout(pyment=payment['method'],data=cart)
+                    
+                    
+                    
                 case 'Logout':
                     exit()
     else:
