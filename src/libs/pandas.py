@@ -5,18 +5,19 @@ from typing import Dict, Optional
 class PandasHandler:
     def __init__(
         self, 
-        path: str
+        path:str
         ) -> None:
         self.PATH = path
+        pass
 
     def load(
         self,
-        path : Optional[str] = None
         ) -> DataFrame:
+        
         """
         Memuat data dari file JSON.
         """
-        return read_json(path if path  else self.PATH)
+        return read_json(self.PATH)
 
     def save(
         self, 
@@ -34,19 +35,26 @@ class PandasHandler:
         """
         Menambahkan data baru ke DataFrame.
         """
+        
         datas = self.load()
         new_data = DataFrame([data])
+        
         datas = concat([datas, new_data], ignore_index=True) 
+
         self.save(datas)
         return datas
 
     def read(
         self,
+        path : Optional[str] = None
         ) -> DataFrame:
         """
         Membaca seluruh data dari file JSON.
         """
-        return self.load()
+        if not path :
+            return self.load()
+        else :
+            return read_json(path)
 
     def read_uniq(
         self,
@@ -89,3 +97,4 @@ class PandasHandler:
         datas = datas.drop(index=id).reset_index(drop=True)
         self.save(datas)
         return datas
+

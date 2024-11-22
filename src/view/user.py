@@ -3,7 +3,6 @@ from typing import Dict
 import os
 
 class user_view(user_model):
-    
     def __init__(self) -> None:
         super().__init__()
     

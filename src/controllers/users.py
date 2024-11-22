@@ -9,13 +9,12 @@ class user_controller(user_view,user_model):
     
     def user_login(self,data_user:Dict):
         try:
-            data_frame = self.read_uniq(where={'email' : str(data_user['email'])})
-
+            data_frame = self.read_uniq(where={'email' : str(data_user['email'])}).reset_index(drop=True)
             if data_frame.empty:
                 print("Email tidak ditemukan.")
                 return
             
-            email , password = str(data_frame['email'][0]), str(data_frame['password'][0])
+            email , password = str(data_frame.loc[0,'email']), str(data_frame.loc[0,'password'])
             
             if email == str(data_user['email']):
                 if password == str(data_user['password']):
