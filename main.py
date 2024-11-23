@@ -133,9 +133,9 @@ sistem akan menampilkan data buah-buahan yang sudah ada di json
                         else:
                             continue
                 case 'Cart':
-'''
+                    '''
 user dapat memilih buah-buahan dan harga dan pilihan user akan di simpan ke json beserta email pengguna sebagai uniq key
-'''
+                    '''
                     
                     title = ' shopping card '.upper()
                     print(f'''
@@ -148,9 +148,9 @@ user dapat memilih buah-buahan dan harga dan pilihan user akan di simpan ke json
 
                     
                 case 'Checkout':
-'''
+                    '''
 sistem akan mengambil data cart dari json berdasarkan email yang sudah di masukan dari login ataupun register. sistem meminta user memasukan data tambahan untuk melengkapi proses pemayaran
-'''
+                    '''
                     cart = cart_config.read_cart(where=email).reset_index(drop=True)
 
                     if cart.empty :
