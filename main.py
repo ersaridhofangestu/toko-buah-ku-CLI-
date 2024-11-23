@@ -7,9 +7,6 @@ from src.controllers.checkout import checkout_controller
 import os
 from pandas import DataFrame,read_json
 
-'''
-f08b
-'''
 if __name__ == '__main__':
 
     user_config = user_controller()
@@ -40,7 +37,7 @@ if __name__ == '__main__':
     if not answers['home-menu'] == 'Exit':
         if answers['home-menu'] == 'Login':
             '''
-                akses login
+                akses login : jika user mengsi sebauh inputan email sistem akan mencari apakah ada data user dengan email tersebut. jika ada sistem akan menampilkan data user tersebut dan menyocokan data email dan password, jika password user tidak Sesai makan sistem akan bertanya lagi. jika tidak ada datanya maka user akan menampilkan alert email tidak di temukan
             '''
             while True :
                 email = select(
@@ -63,14 +60,13 @@ if __name__ == '__main__':
                 status_user = user_config.user_login(data_user=new_data_user)
                         
                 if status_user == True :
-                    print('testing')
                     break
                 else :
                     continue
         if answers['home-menu'] == 'Register':
                 while True :
                         '''
-                            register
+                            register : user mengimputkan sebuah email dan password, sistem akan membaca data dari json. jika user mengimputkan email yang sudah terdaftar maka akan muncul alert email sudah di gunakan dan jika email belom di gunakan sistem akan menyimpan data nya kedalam json 
                         '''
                         email = select(
                                 type='input',
@@ -90,11 +86,13 @@ if __name__ == '__main__':
                         
                         status_user = user_config.user_register(data_user=new_data_user)
                         if status_user == True :
-                            print('testing')
                             break
                         else :
                             continue
         
+'''
+jika user sudah berhasil autentification maka akan menampilkan option menu pengguna. di tiap menu pengguna ada tampilan data yang berbeda, Sesai dengan nama option nya
+'''
         while True :
         
             title = ' menu pelanggan '.upper()
@@ -115,6 +113,9 @@ if __name__ == '__main__':
 
             match answers['pelanggan-menu'].split(' ')[-1]:
                 case 'Menu':
+'''
+sistem akan menampilkan data buah-buahan yang sudah ada di json 
+'''
                     title = ' fresh fruit '.upper()
                     print(f'''
         {icon*len_char}
@@ -132,6 +133,9 @@ if __name__ == '__main__':
                         else:
                             continue
                 case 'Cart':
+'''
+user dapat memilih buah-buahan dan harga dan pilihan user akan di simpan ke json beserta email pengguna sebagai uniq key
+'''
                     
                     title = ' shopping card '.upper()
                     print(f'''
@@ -144,6 +148,9 @@ if __name__ == '__main__':
 
                     
                 case 'Checkout':
+'''
+sistem akan mengambil data cart dari json berdasarkan email yang sudah di masukan dari login ataupun register. sistem meminta user memasukan data tambahan untuk melengkapi proses pemayaran
+'''
                     cart = cart_config.read_cart(where=email).reset_index(drop=True)
 
                     if cart.empty :
