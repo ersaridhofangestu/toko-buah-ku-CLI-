@@ -26,50 +26,54 @@ class cart_controller(cart_model):
                     lambda row: f'{row["id"]}) {row["name"]}/{row["unit"]} - Rp. {row["price"]:,.0f}', 
                     axis=1
                 ).reset_index(drop=True)
-
                 
-                while True:
+                def loop():
+                    while True:
                     
-                    selected_product_answer = select(
-                        type='list',
-                        name='selected_option',
-                        choices=product_list['formatted'], 
-                        message="Pilih buah yang ingin dibeli"
-                    )
-                    
-                    selected_option_id = selected_product_answer['selected_option'].split(')')[0]
-                    
-                    selected_product = product_list[product_list['id'] == int(selected_option_id)].reset_index(drop=True)
-                    
-                    
-                    purchase_quantity = select(
-                        type='input',
-                        name='quantity',
-                        validate=lambda val: (val.isdigit() and int(val) >= 0) or 'Harus berupa angka positif!' ,
-                        message=f'Anda ingin membeli {selected_product.loc[0, "name"]} berapa {selected_product.loc[0, "unit"]}',
-                    )
-                    
-                    purchased_item = {
-                        "name": selected_product.loc[0, "name"],
-                        "price": int(selected_product.loc[0, "price"]),
-                        'quantity': int(purchase_quantity['quantity']),
-                        "total": int(selected_product.loc[0, "price"]) * int(purchase_quantity['quantity'])
-                    }
-                    
-                    item_prices.append(purchased_item['total'])
-                    if "items" not in customer_selection or not isinstance(customer_selection["items"], list):
-                        customer_selection["items"] = []
-                    customer_selection['items'].append(purchased_item)
+                        selected_product_answer = select(
+                            type='list',
+                            name='selected_option',
+                            choices=[*product_list['formatted'], 'Exit'], 
+                            message="Pilih buah yang ingin dibeli"
+                        )
+                        
+                        if selected_product_answer['selected_option'] == 'Exit':
+                            return 'Exit'
+                        
+                        selected_option_id = selected_product_answer['selected_option'].split(')')[0]
+                        
+                        selected_product = product_list[product_list['id'] == int(selected_option_id)].reset_index(drop=True)
+                        
+                        
+                        purchase_quantity = select(
+                            type='input',
+                            name='quantity',
+                            validate=lambda val: (val.isdigit() and int(val) >= 0) or 'Harus berupa angka positif!' ,
+                            message=f'Anda ingin membeli {selected_product.loc[0, "name"]} berapa {selected_product.loc[0, "unit"]}',
+                        )
+                        
+                        
+                        purchased_item = {
+                            "name": selected_product.loc[0, "name"],
+                            "price": int(selected_product.loc[0, "price"]),
+                            'quantity': int(purchase_quantity['quantity']),
+                            "total": int(selected_product.loc[0, "price"]) * int(purchase_quantity['quantity'])
+                        }
+                        
+                        item_prices.append(purchased_item['total'])
+                        if "items" not in customer_selection or not isinstance(customer_selection["items"], list):
+                            customer_selection["items"] = []
+                        customer_selection['items'].append(purchased_item)
 
-                    continue_answer = select(
-                        type='confirm',
-                        name='continue_shopping',
-                        message="Lajut belanja ?"
-                    )
-                    if not continue_answer['continue_shopping']:
-                        break
-
-                customer_selection['total_price'] = calculate_total(item_prices)
-
-                self.create_cart([customer_selection])
-                return customer_selection
+                        continue_answer = select(
+                            type='confirm',
+                            name='continue_shopping',
+                            message="Lajut belanja ?"
+                        )
+                        if not continue_answer['continue_shopping']:
+                            break
+                        
+                if loop() != 'Exit':
+                    customer_selection['total_price'] = calculate_total(item_prices)
+                    self.create_cart([customer_selection])
+                    return customer_selection

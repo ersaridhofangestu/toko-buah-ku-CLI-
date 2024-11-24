@@ -1,6 +1,9 @@
-from typing import Dict
 from ..view.user import user_view
 from ..models.user import user_model
+
+from typing import Dict
+from time import sleep
+
 class user_controller(user_view,user_model):
     def __init__(self) -> None:
         super().__init__()
@@ -18,17 +21,20 @@ class user_controller(user_view,user_model):
             
             if email == str(data_user['email']):
                 if password == str(data_user['password']):
-                    print('Berhasil login')
+                    sleep(0.5)
+                    print('\uF00c  Berhasil login')
                     return True
                 else:
-                    print('Password salah.')
+                    print('\uF00d  Password salah.')
                     return False
             else:
-                print('Email salah.')
+                sleep(2)
+                print('\uF00d  Email salah.')
                 return False
                 
         except ValueError :
-            print('Email salah') 
+            sleep(2)
+            print('\uF00d  Email salah') 
             return False
     
     def user_register(self,data_user:Dict):
@@ -36,7 +42,8 @@ class user_controller(user_view,user_model):
         user = self.read_uniq(where={'email' : data_user['email']})
         
         if len(user) > 0 :
-            print('Email sudah di gunakan.')
+            sleep(0.5)
+            print('\uF00d  Email sudah di gunakan.')
             return False
         
         add_data = self.create_user(data=data_user)

@@ -83,15 +83,20 @@ class PandasHandler:
 
     def delete(
         self, 
-        id: int
+        id: str
         ) -> DataFrame:
         """
         Menghapus baris dengan ID tertentu dari DataFrame.
         """
-        datas = self.load()
-        if id < 0 or id >= len(datas):
-            raise IndexError("ID tidak valid.")
-        datas = datas.drop(index=id).reset_index(drop=True)
-        self.save(datas)
-        return datas
+        id = str(id)
+        data = self.read(self.PATH)
+        if id not in data['id'].values:
+            print(f"ID '{id}' tidak ditemukan.")
+            return data
+
+        data = data[data['id'] != id].reset_index(drop=True)
+        
+        self.save(data)
+        return data
+
 

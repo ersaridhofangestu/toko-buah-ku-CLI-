@@ -12,3 +12,6 @@ class cart_model(PandasHandler) :
     
     def read_cart(self,where):
         return self.read_uniq(where)
+
+    def delete_cart(self,id):
+        return self.delete(id)

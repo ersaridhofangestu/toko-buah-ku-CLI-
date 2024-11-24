@@ -13,6 +13,10 @@
     },
     {
         "email":"ersa01@gmal.com",
+        "password":9090
+    },
+    {
+        "email":"ersa1@gmail.com",
         "password":"9090"
     }
 ]
