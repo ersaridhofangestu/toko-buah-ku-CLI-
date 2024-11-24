@@ -9,7 +9,6 @@ from time import sleep
 from tabulate import tabulate
 from pandas import DataFrame,read_json
 
-
 if __name__ == '__main__':
 
     user_config = user_controller()
@@ -33,7 +32,6 @@ if __name__ == '__main__':
     
     if not answers['home-menu'].split(' ')[-1] == 'Exit':
         if answers['home-menu'].split(' ')[-1]== 'Login':
-            
             while True :
                 sleep(0.5)
                 email = select(
@@ -62,9 +60,7 @@ if __name__ == '__main__':
                     continue
         if answers['home-menu'].split(' ')[-1] == 'Register':
                 while True :
-                        '''
-                            register
-                        '''
+                        
                         email = select(
                                 type='input',
                                 name='email', 
@@ -131,6 +127,7 @@ if __name__ == '__main__':
                             continue
                 case 'Cart':
                     Console().clear()
+                    
                     title = ' shopping card '.upper()
                     print(f'''
         {icon*len_char}
